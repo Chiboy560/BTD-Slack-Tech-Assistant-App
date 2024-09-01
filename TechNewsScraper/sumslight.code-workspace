@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "../../BTDslack-chatbot/TechMemeScraper"
+		},
+		{
+			"path": "../../../Slack Chatbot Development"
+		},
+		{
+			"path": "../../BTDslack-chatbot/final-version"
+		},
+		{
+			"path": "../../BTDslack-chatbot/onboarding"
+		},
+		{
+			"path": "../../BTDslack-chatbot/TechNewsScraper"
+		},
+		{
+			"path": "../../BTDslack-chatbot"
+		},
+		{
+			"path": "../../../../VTL Web Dev Folder"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "VTL Web Dev Folder"
+	}
+}
