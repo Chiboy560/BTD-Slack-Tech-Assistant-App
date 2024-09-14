@@ -1,0 +1,8 @@
+Flask==2.2.2
+slack-sdk==3.18.0
+slackeventsapi==2.2.1
+python-dotenv==0.21.0
+requests==2.26.0
+beautifulsoup4==4.10.0
+praw==7.6.0
+schedule==1.1.0
