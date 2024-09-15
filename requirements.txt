@@ -1,4 +1,4 @@
-Flask==2.2.2
+Flask>=1.0,<2.0
 slack-sdk==3.18.1
 slackeventsapi==2.2.1
 requests==2.26.0
