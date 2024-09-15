@@ -4,7 +4,6 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from flask import Flask, request
-from dotenv import load_dotenv
 from slackeventsapi import SlackEventAdapter
 import time
 import requests
@@ -12,9 +11,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import schedule
 import praw  # Reddit API library
-
-# Load environment variables from .env file
-load_dotenv()
 
 app = Flask(__name__)  # Initialize Flask app
 
