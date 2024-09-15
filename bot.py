@@ -256,3 +256,8 @@ if __name__ == "__main__":
     schedule_news_weekly()  # Schedule weekly news job
     schedule_meme_job()  # Schedule daily meme job
     app.run(port=3000)  # Run Flask app
+    from werkzeug.serving import run_simple
+    import os
+    
+    port = int(os.environ.get("PORT", 5000))  # Default to port 5000 if PORT is not set
+    run_simple('0.0.0.0', port, app)
