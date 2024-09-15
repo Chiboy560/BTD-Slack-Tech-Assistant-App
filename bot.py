@@ -241,7 +241,6 @@ def post_reddit_memes_to_slack(memes):
             client.chat_postMessage(
                 channel=COMMUNITY_MEMES_ID,  # Community Memes channel ID
                 text= f"*{meme['title']}*",
-                text= f"*{meme['title']}*",
                 attachments=attachments
             )
         except SlackApiError as e:
