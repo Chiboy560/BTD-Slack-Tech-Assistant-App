@@ -3,7 +3,6 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from flask import Flask, request
-from dotenv import load_dotenv
 from slackeventsapi import SlackEventAdapter
 import time
 import requests
@@ -12,8 +11,7 @@ from urllib.parse import urljoin
 import schedule
 import praw  # Reddit API library
 
-# Load environment variables from .env file
-load_dotenv()
+
 
 app = Flask(__name__)  # Initialize Flask app
 
@@ -240,7 +238,6 @@ def post_reddit_memes_to_slack(memes):
             client.chat_postMessage(
                 channel=COMMUNITY_MEMES_ID,  # Community Memes channel ID
                 text= f"*{meme['title']}*",
-                text= f"*{meme['title']}*",
                 attachments=attachments
             )
         except SlackApiError as e:
@@ -259,5 +256,9 @@ def schedule_meme_job():
 if __name__ == "__main__":
     schedule_news_weekly()  # Schedule weekly news job
     schedule_meme_job()  # Schedule daily meme job
-    app.run(port=3000)  # Run Flask app
+   # Get the port from environment variable or use default
+    port = int(os.environ.get("PORT", 10000))
+    
+    # Start the Flask app
+    app.run(host="0.0.0.0", port=port)
 
