@@ -185,7 +185,7 @@ def post_news_message_to_slack(messages):
 
 # Schedule the weekly news job to run every Monday
 def schedule_news_weekly():
-    schedule.every().monday.at("09:00").do(run_news_weekly_job)
+    schedule.every().monday.at("12:00").do(run_news_weekly_job)
 
     while True:
         schedule.run_pending()
@@ -248,7 +248,7 @@ def run_daily_meme_job():
 
 # Schedule the daily meme job to run every day
 def schedule_meme_job():
-    schedule.every().day.at("09:00").do(run_daily_meme_job)
+    schedule.every().day.at("12:00").do(run_daily_meme_job)
 
 # Main function to start the app and schedule jobs
 if __name__ == "__main__":
