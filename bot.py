@@ -254,5 +254,6 @@ def schedule_meme_job():
 if __name__ == "__main__":
     schedule_news_weekly()  # Schedule weekly news job
     schedule_meme_job()  # Schedule daily meme job
-    # Flask server should be managed by Gunicorn
-    # app.run(port=8000) 
+    port = int(os.getenv('PORT', 8000))  # Default to port 8000 if not specified
+    app.run(host='0.0.0.0', port=port)
+    
