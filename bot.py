@@ -250,6 +250,10 @@ def run_daily_meme_job():
 def schedule_meme_job():
     schedule.every().day.at("09:00").do(run_daily_meme_job)
 
+@app.route('/')
+def home():
+    return "Your Flask app is running!"
+
 # Main function to start the app and schedule jobs
 if __name__ == "__main__":
     schedule_news_weekly()  # Schedule weekly news job
