@@ -45,7 +45,7 @@ def recognize_member_joined(event_data):
     event_ts = event.get("event_ts")
 
     # Debounce logic to prevent duplicate messages
-    if user_id in last_event_timestamp and event_ts <= last_event_timestamp[user_id]:
+    if user_id in last_event_timestamp and float(event_ts) <= float(last_event_timestamp[user_id]):
         return
     
     last_event_timestamp[user_id] = event_ts
@@ -60,16 +60,17 @@ def recognize_member_joined(event_data):
 # Send onboarding message via direct message
 def send_direct_onboarding_message(user_id):
     try:
-        response = client.conversations_open(users=[user_id])
+        # Pass user_id as a string, not a list
+        response = client.conversations_open(users=user_id)
         channel_id = response["channel"]["id"]
 
         client.chat_postMessage(
             channel=channel_id,
             text=ONBOARDING_MESSAGE.format(user_id=user_id)
         )
-        print(f"Message sent: {text}")
+        print(f"Onboarding message sent to user {user_id}")
     except SlackApiError as e:
-        print(f"Error sending onboarding message: {e.response['error']}")
+        print(f"Error sending onboarding message to user {user_id}: {e.response['error']}")
 
 # Send welcome message to the channel
 def send_channel_welcome_message(channel_id, user_id):
@@ -78,9 +79,9 @@ def send_channel_welcome_message(channel_id, user_id):
             channel=channel_id,
             text=WELCOME_MESSAGE.format(user_id=user_id)
         )
-        print(f"Message sent: {text}")
+        print(f"Welcome message sent to user {user_id} in channel {channel_id}")
     except SlackApiError as e:
-        print(f"Error sending welcome message: {e.response['error']}")
+        print(f"Error sending welcome message to user {user_id} in channel {channel_id}: {e.response['error']}")
 
 # Handle user leaving the channel
 @slack_event_adapter.on("member_left_channel")
