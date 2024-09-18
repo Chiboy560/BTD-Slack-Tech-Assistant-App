@@ -250,6 +250,16 @@ def run_daily_meme_job():
 def schedule_meme_job():
     schedule.every().day.at("12:00").do(run_daily_meme_job)
 
+@app.route('/run_news', methods=['POST'])
+def manual_run_news():
+    run_news_weekly_job()
+    return "News job triggered manually!"
+
+@app.route('/run_meme', methods=['POST'])
+def manual_run_meme():
+    run_daily_meme_job()
+    return "Meme job triggered manually!"
+
 # Main function to start the app and schedule jobs
 if __name__ == "__main__":
     # Schedule weekly and daily jobs
