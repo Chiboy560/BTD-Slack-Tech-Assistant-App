@@ -136,7 +136,7 @@ def find_articles():
                         'link': link,
                         'image_url': image_url
                     })
-                articles_scraped += 1
+                articles_scraped +=1
         except requests.RequestException as e:
             print(f"Error fetching articles from {siteName}: {e}")
 
@@ -185,7 +185,7 @@ def post_news_message_to_slack(messages):
 
 # Schedule the weekly news job to run every Monday
 def schedule_news_weekly():
-    schedule.every().monday.at("12:00").do(run_news_weekly_job)
+    schedule.every().monday.at("09:00").do(run_news_weekly_job)
 
     while True:
         schedule.run_pending()
@@ -214,11 +214,11 @@ def scrape_reddit_memes(subredditName, limit=3):
             if submission.url.endswith(('jpg', 'png', 'gif', 'jpeg')) and not submission.over_18:
                 meme = {
                     'title': submission.title,
-                    'url': submission.url,
+                    'url' : submission.url,
                     'permalink': submission.permalink,
-                    'image_url': submission.url
+                    'image_url': submission.url 
                 }
-                memes.append(meme)
+            memes.append(meme)
 
     return memes
 
@@ -230,12 +230,12 @@ def post_reddit_memes_to_slack(memes):
             if meme['image_url']:
                 attachments.append({
                     "fallback": "Image not available.",
-                    "text": f"<https://reddit.com{meme['permalink']}|{meme['title']}>",
-                    "image_url": meme['image_url'],
+                    "text": f"<https://reddit.com{meme['permalink']}|{meme['title']}>",  
+                    "image_url": meme['image_url'],      
                 })
             client.chat_postMessage(
                 channel=COMMUNITY_MEMES_ID,  # Community Memes channel ID
-                text=f"*{meme['title']}*",
+                text= f"*{meme['title']}*",
                 attachments=attachments
             )
         except SlackApiError as e:
@@ -248,23 +248,11 @@ def run_daily_meme_job():
 
 # Schedule the daily meme job to run every day
 def schedule_meme_job():
-    schedule.every().day.at("12:00").do(run_daily_meme_job)
-
-@app.route('/run_news', methods=['POST'])
-def manual_run_news():
-    run_news_weekly_job()
-    return "News job triggered manually!"
-
-@app.route('/run_meme', methods=['POST'])
-def manual_run_meme():
-    run_daily_meme_job()
-    return "Meme job triggered manually!"
+    schedule.every().day.at("09:00").do(run_daily_meme_job)
 
 # Main function to start the app and schedule jobs
 if __name__ == "__main__":
-    # Schedule weekly and daily jobs
-    schedule_news_weekly()  
-    schedule_meme_job()  
-    
-    port = int(os.environ.get("PORT", 5000))  # default to port 5000 if PORT is not set
-    app.run(host="0.0.0.0", port=port)
+    schedule_news_weekly()  # Schedule weekly news job
+    schedule_meme_job()  # Schedule daily meme job
+    # Flask server should be managed by Gunicorn
+    # app.run(port=8000) 
