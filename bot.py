@@ -258,5 +258,6 @@ def home():
 if __name__ == "__main__":
     schedule_news_weekly()  # Schedule weekly news job
     schedule_meme_job()  # Schedule daily meme job
+    app.run(port=8000)
     
     
