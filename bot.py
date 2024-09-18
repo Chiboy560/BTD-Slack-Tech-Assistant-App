@@ -67,7 +67,7 @@ def send_direct_onboarding_message(user_id):
             channel=channel_id,
             text=ONBOARDING_MESSAGE.format(user_id=user_id)
         )
-    print(f"Message sent: {text}")
+        print(f"Message sent: {text}")
     except SlackApiError as e:
         print(f"Error sending onboarding message: {e.response['error']}")
 
@@ -78,7 +78,7 @@ def send_channel_welcome_message(channel_id, user_id):
             channel=channel_id,
             text=WELCOME_MESSAGE.format(user_id=user_id)
         )
-    print(f"Message sent: {text}")
+        print(f"Message sent: {text}")
     except SlackApiError as e:
         print(f"Error sending welcome message: {e.response['error']}")
 
