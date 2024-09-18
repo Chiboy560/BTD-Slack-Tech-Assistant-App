@@ -266,8 +266,5 @@ if __name__ == "__main__":
     schedule_news_weekly()  
     schedule_meme_job()  
     
-    # Get the port from environment variable or use default
-    port = int(os.environ.get("PORT", 10000))
-    
-    # Start the Flask app
+    port = int(os.environ.get("PORT", 5000))  # default to port 5000 if PORT is not set
     app.run(host="0.0.0.0", port=port)
