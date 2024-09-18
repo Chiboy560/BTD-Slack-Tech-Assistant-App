@@ -11,8 +11,6 @@ from urllib.parse import urljoin
 import schedule
 import praw  # Reddit API library
 
-
-
 app = Flask(__name__)  # Initialize Flask app
 
 # Slack and Reddit API credentials
@@ -138,7 +136,7 @@ def find_articles():
                         'link': link,
                         'image_url': image_url
                     })
-                articles_scraped +=1
+                articles_scraped += 1
         except requests.RequestException as e:
             print(f"Error fetching articles from {siteName}: {e}")
 
@@ -216,11 +214,11 @@ def scrape_reddit_memes(subredditName, limit=3):
             if submission.url.endswith(('jpg', 'png', 'gif', 'jpeg')) and not submission.over_18:
                 meme = {
                     'title': submission.title,
-                    'url' : submission.url,
+                    'url': submission.url,
                     'permalink': submission.permalink,
-                    'image_url': submission.url 
+                    'image_url': submission.url
                 }
-            memes.append(meme)
+                memes.append(meme)
 
     return memes
 
@@ -232,12 +230,12 @@ def post_reddit_memes_to_slack(memes):
             if meme['image_url']:
                 attachments.append({
                     "fallback": "Image not available.",
-                    "text": f"<https://reddit.com{meme['permalink']}|{meme['title']}>",  
-                    "image_url": meme['image_url'],      
+                    "text": f"<https://reddit.com{meme['permalink']}|{meme['title']}>",
+                    "image_url": meme['image_url'],
                 })
             client.chat_postMessage(
                 channel=COMMUNITY_MEMES_ID,  # Community Memes channel ID
-                text= f"*{meme['title']}*",
+                text=f"*{meme['title']}*",
                 attachments=attachments
             )
         except SlackApiError as e:
@@ -254,9 +252,11 @@ def schedule_meme_job():
 
 # Main function to start the app and schedule jobs
 if __name__ == "__main__":
-    schedule_news_weekly()  # Schedule weekly news job
-    schedule_meme_job()  # Schedule daily meme job
-   # Get the port from environment variable or use default
+    # Schedule weekly and daily jobs
+    schedule_news_weekly()  
+    schedule_meme_job()  
+    
+    # Get the port from environment variable or use default
     port = int(os.environ.get("PORT", 10000))
     
     # Start the Flask app
